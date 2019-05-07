@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>0 Cookies</title>
+	<script>
+		
+		function update() {
+			document.getElementById('text').value = cookiecount;
+			document.title = cookiecount + ' Cookies';
+			
+			document.getElementById('amountAutoClick').innerText = "You own " + autoClick + " AutoClickers";
+			document.getElementById('costAutoClick').innerText = (autoClick + 1) * 12 + " Cookies";
+			
+			document.getElementById('amountGrandmas').innerText = "You own " + grandmas + " Grandmas";
+			document.getElementById('costGrandmas').innerText = (grandmas + 1) * 85 + " Cookies";
+			
+			document.getElementById('amountFarms').innerText = "You own " + farms + " Farms";
+			document.getElementById('costFarms').innerText = (farms + 1) * 500 + " Cookies";
+			
+			document.getElementById("cps").innerText = (((autoClick)+((grandmas*10)+grandmas)+((farms*50)+farms))* multiplier + " CPS");
+			
+			timerr = setTimeout(timer, 1000)
+		}
+		
+		var cookiecount = 0;
+		var multiplier = 1;
+		var autoClick = 0;
+		var grandmas = 0;
+		var farms = 0;
+		var timerr;
+		
+		document.getElementById('text').value = cookiecount;
+		
+		function timer() {
+			clearTimeout(timerr);
+			cookiecount = cookiecount + autoClick + (grandmas * 10 + grandmas) + (farms * 50 + farms);
+			update();
+		}
+		
+		setInterval(timer, 1000);
+	</script>
+	
+	<style>
+		body {
+			text-align: center;
+		}
+		
+		#cookie {
+			width: 20%;
+			height: auto;
+		}
+		
+		#cursor {
+			width: 20%;
+			height: auto;
+		}
+		
+		#grandma {
+			width: 30%;
+			height: auto;
+		}
+		
+		#farm {
+			width: 45%;
+			height: auto;
+		}
+		
+		button {
+			width: 15%;
+		}
+		
+		#left {
+			float: left;
+		}
+		
+		#right {
+			float: right;
+		}
+	</style>
+</head>
+<body>
+	
+	<div id="left">
+	
+		<button><a href="#" onclick="save()">Save</a></button>
+		<button><a href="#" onclick="load()">Load</a></button>
+		
+		<br><br>
+		
+		<p id="cps">0 CPS</p>
+
+		You got: 
+		<input type="text" id="text" disabled style="text-align: center;" value="0">
+		Cookies
+		
+		<br><br>
+
+		<a href="#" onclick="add()"><img src="img/cookie.png" id="cookie"></a><br><br>
+		
+	</div>
+		
+	<div id="right">
+		
+		<br><br>
+		
+		<p>Buy a AutoClicker</p>
+		<button><a href="#" onclick="buyAutoClick()"><img src="img/autoClicker.png" id="cursor"></a></button>
+		<p id="costAutoClick">12 Cookies</p>
+		<p id="amountAutoClick">You own 0 AutoClickers</p>
+		
+		<br><br>
+		
+		<p>Buy a Grandma</p>
+		<button><a href="#" onclick="buyGrandma()"><img src="img/grandma.png" id="grandma"></a></button>
+		<p id="costGrandmas">85 Cookies</p>
+		<p id="amountGrandmas">You own 0 Grandmas</p>
+		
+		<br><br>
+		
+		<p>Buy a Farm</p>
+		<button><a href="#" onclick="buyFarm()"><img src="img/farm.png" id="farm"></a></button>
+		<p id="costFarms">500 Cookies</p>
+		<p id="amountFarms">You own 0 Farms</p>
+	</div>
+	
+	<script>
+
+		function add() {
+			cookiecount = cookiecount + 1;
+			console.log(cookiecount);
+			cookie.style.width = "22%";
+			setTimeout(function(){ document.getElementById("cookie").style.width = "20%";document.getElementById("cookie").style.transform = "translate(10px, -10px)"; }, 100);
+			update();
+		}
+		
+		function save() {
+			localStorage.setItem("cookiecount", cookiecount);
+			localStorage.setItem("autoClick", autoClick);
+			localStorage.setItem("grandmas", grandmas);
+			localStorage.setItem("farms", farms);
+		}
+		
+		function load() {
+			cookiecount = localStorage.getItem("cookiecount");
+			cookiecount = parseInt(cookiecount);
+			autoClick = localStorage.getItem("autoClick");
+			autoClick = parseInt(autoClick);
+			grandmas = localStorage.getItem("grandmas");
+			grandmas = parseInt(grandmas);
+			farms = localStorage.getItem("farms");
+			farms = parseInt(farms);
+			update();
+		}
+		
+		function buyAutoClick() {
+			if (cookiecount >= ((autoClick + 1) * 12)) {
+				cookiecount = cookiecount - ((autoClick + 1) * 12);
+				autoClick = autoClick + 1;
+				update();
+			}
+		}
+		
+		function buyGrandma() {
+			if (cookiecount >= ((grandmas + 1) * 85)) {
+				cookiecount = cookiecount - ((grandmas + 1) * 85);
+				grandmas = grandmas + 1;
+				update();
+			}
+		}
+		
+		function buyFarm() {
+			if (cookiecount >= ((farms + 1) * 500)) {
+				cookiecount = cookiecount - ((farms + 1) * 500);
+				farms = farms + 1;
+				update();
+			}
+		}
+
+	</script>
+
+</body>
+</html>
